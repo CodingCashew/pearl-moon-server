@@ -1,7 +1,7 @@
 import emailjs from "@emailjs/browser";
 
 export default async function handler(req, res) {
-  console.log('in handler for send-error-email.js, huzzah!');
+  console.log('in handler for send-error-email.js, huzzah! ------------------------------->', req.body);
   if (req.method === "POST") {
     const { orderId, customerName, distributor, timeStamp, errorMessage } = req.body;
 
