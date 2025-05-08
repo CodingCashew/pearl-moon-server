@@ -48,8 +48,7 @@ function getDistributor(item) {
   }
 }
 async function sendErrorEmail(message, item) {
-  // const sendErrorEmailUrl = "http://localhost:3000";
-  const sendErrorEmailUrl = process.env.BASE_URL || "http://localhost:3000";
+  const sendErrorEmailUrl = process.env.BASE_URL;
 
   await fetch(`${sendErrorEmailUrl}/api/send-error-email`, {
     method: "POST",
