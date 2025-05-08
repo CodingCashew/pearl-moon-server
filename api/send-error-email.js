@@ -2,6 +2,7 @@ export default async function handler(req, res) {
   console.log("in handler for send-error-email.js, huzzah! ------------------------------->", req.body);
 
   if (req.method === "POST") {
+    console.log('in handler for send-error-email.js, huzzah! ------------------------------->', req.body);
     const { orderId, customerName, distributor, timeStamp, errorMessage } = req.body;
 
     try {
@@ -31,7 +32,7 @@ export default async function handler(req, res) {
           template_id: process.env.EMAILJS_TEMPLATE_ID,
           user_id: process.env.EMAILJS_PUBLIC_KEY,
           template_params: templateParams,
-          // accessToken: process.env.EMAILJS_PRIVATE_KEY,
+          accessToken: process.env.EMAILJS_PRIVATE_KEY,
         }),
       });
 
