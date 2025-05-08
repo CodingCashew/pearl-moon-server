@@ -1,4 +1,6 @@
-require("dotenv").config();
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -55,8 +57,8 @@ async function sendErrorEmail(message, item) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      orderId: item.id,
-      customerName: item.customer_name,
+      orderId: item.orderId,
+      customerName: item.customerName,
       distributor: item.distributor,
       timeStamp: new Date().toISOString(),
       errorMessage: message,

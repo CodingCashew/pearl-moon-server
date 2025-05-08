@@ -1,6 +1,7 @@
 {
   "name": "pearl-moon-server",
   "version": "1.0.0",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,7 +11,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@emailjs/browser": "^4.4.1",
-    "dotenv": "^16.5.0"
+    "dotenv": "^16.5.0",
+    "emailjs": "^4.0.3"
   }
 }
