@@ -18,9 +18,10 @@ export default async function handler(req, res) {
         template_id: process.env.EMAILJS_TEMPLATE_ID,
         user_id: process.env.EMAILJS_PUBLIC_KEY,
         template_params: templateParams,
+        accessToken: process.env.EMAILJS_PRIVATE_KEY,
       });
       // Use fetch to call the EmailJS REST API
-      const response = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
+      const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
