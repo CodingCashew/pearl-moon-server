@@ -8,5 +8,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "@emailjs/browser": "^4.4.1",
+    "dotenv": "^16.5.0"
+  }
 }
