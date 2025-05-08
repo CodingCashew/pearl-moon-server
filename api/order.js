@@ -3,52 +3,87 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export default async function handler(req, res) {
-  console.log('Request body ------------------------> ', req.body);
+  console.log("Request body ------------------------> ", req.body);
   if (req.method !== "POST") {
     return res.status(405).send("Method Not Allowed");
   }
 
   const order = req.body;
 
-  let sendErrorStatus = false;
-
-  // TODO: make sure this groups items in one order to the same distributor
-  for (const item of order.line_items) {
-    const distributor = getDistributor(item);
-
-    if (distributor === "sexology") {
-      await sendToSexology(item, order);
-    } else if (distributor === "honeysplace") {
-      await sendToHoneysPlace(item, order);
-    } else {
-      await sendErrorEmail("Unknown distributor", item);
-      sendErrorStatus = true;
+  const sexologyItems = order.line_items.filter(
+    (item) => item.vendor === "sexology"
+  );
+  const honeysPlaceItems = order.line_items.filter(
+    (item) => item.vendor === "honeysplace"
+  );
+  const unknownItems = order.line_items.filter(
+    (item) =>
+      item.vendor !== "sexology" && item.vendor !== "honeysplace"
+  );
+  if (unknownItems.length) {
+    // TODO: update this to send all the items in the unknownItems array
+    const orderDetailsForEmail = {
+      orderId: order.id,
+      customerName: `${order.customer.first_name} ${order.customer.last_name}`,
+      distributor: unknownItems[0].vendor,
     }
-  }
-  if (sendErrorStatus) {
-    return res.status(400).send("Unknown distributor");
+    await sendErrorEmail("Unknown distributor", orderDetailsForEmail);
   }
 
+  if (sexologyItems.length) {
+    sendToSexology(order, sexologyItems);
+  }
+  if (honeysPlaceItems.length) {
+    sendToHoneysPlace(order, honeysPlaceItems);
+  }
   res.status(200).send("OK");
 }
 
-async function sendToSexology(item, order) {
-  console.log("Sending to Sexology:", item);
-}
-async function sendToHoneysPlace(item, order) {
-  console.log("Sending to Honey's Place:", item);
-}
-
-function getDistributor(item) {
-  if (item.distributor === "sexology") {
-    return "sexology";
-  } else if (item.distributor === "honeysplace") {
-    return "honeysplace";
-  } else {
-    return "unknown";
+async function sendToSexology(fullOrder, sexologyItems) {
+  try {
+    const formattedOrder = formatSexologyOrder(fullOrder, sexologyItems);
+    console.log("Sending to Sexology:", formattedOrder);
+    // Send the formatted order to Sexology
+  } catch (error) {
+    const orderDetailsForEmail = {
+      orderId: fullOrder.id,
+      customerName: `${fullOrder.customer.first_name} ${fullOrder.customer.last_name}`,
+      distributor: "sexology",
+    }
+    console.error("Error sending to Sexology:", error, orderDetailsForEmail);
+    await sendErrorEmail("Error sending to Sexology", orderDetailsForEmail);
+    return;
   }
 }
-async function sendErrorEmail(message, item) {
+
+function formatSexologyOrder(fullOrder, sexologyItems) {
+  // Format the order for Sexology
+  return sexologyItems;
+}
+
+async function sendToHoneysPlace(fullOrder, honeysPlaceItems) {
+  try {
+    const formattedOrder = formatHoneysPlaceOrder(fullOrder, honeysPlaceItems);
+    console.log("Sending to Honey's Place:", formattedOrder);
+    // send the formatted order to Honey's Place
+  } catch (error) {
+    const orderDetailsForEmail = {
+      orderId: fullOrder.id,
+      customerName: `${fullOrder.customer.first_name} ${fullOrder.customer.last_name}`,
+      distributor: "honeysplace",
+    }
+    console.error("Error sending to Honey's Place:", error, orderDetailsForEmail);
+    await sendErrorEmail("Error sending to Honey's Place", orderDetailsForEmail);
+    return;
+  }
+}
+
+function formatHoneysPlaceOrder(fullOrder, honeysPlaceItems) {
+  // Format the order for Honey's Place
+  return honeysPlaceItems;
+}
+
+async function sendErrorEmail(message, orderDetailsForEmail) {
   const sendErrorEmailUrl = process.env.BASE_URL;
 
   await fetch(`${sendErrorEmailUrl}/api/send-error-email`, {
@@ -57,9 +92,9 @@ async function sendErrorEmail(message, item) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      orderId: item.orderId,
-      customerName: item.customerName,
-      distributor: item.distributor,
+      orderId: orderDetailsForEmail.orderId,
+      customerName: orderDetailsForEmail.customerName,
+      distributor: orderDetailsForEmail.distributor,
       timeStamp: new Date().toISOString(),
       errorMessage: message,
     }),
