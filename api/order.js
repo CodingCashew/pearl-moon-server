@@ -1,3 +1,4 @@
+import { distributorMap } from "../lib/distributorMap.js";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -10,6 +11,32 @@ export default async function handler(req, res) {
 
   const order = req.body;
 
+  if (!order || !order.line_items) {
+    sendErrorEmail("Invalid order data", {
+      orderId: order.id || "unknown",
+      customerName:
+        `${order.customer.first_name} ${order.customer.last_name}` || "unknown",
+      distributor: "unknown",
+    });
+    return res.status(400).send("Bad Request; No order or no line items");
+  }
+
+  const lineItems = order.line_items.map((item) => {
+    const distributor = getDistributor(item.product_id);
+    return {
+      ...item,
+      distributor,
+    };
+  });
+  console.log("Line items after adding distributor property:", lineItems);
+
+  order = {
+    ...order,
+    line_items: lineItems,
+  };
+
+  console.log("Order after adding distributor property:", order);
+
   const sexologyItems = order.line_items.filter(
     (item) => item.vendor === "sexology"
   );
@@ -17,8 +44,7 @@ export default async function handler(req, res) {
     (item) => item.vendor === "honeysplace"
   );
   const unknownItems = order.line_items.filter(
-    (item) =>
-      item.vendor !== "sexology" && item.vendor !== "honeysplace"
+    (item) => item.vendor !== "sexology" && item.vendor !== "honeysplace"
   );
   if (unknownItems.length) {
     // TODO: update this to send all the items in the unknownItems array
@@ -26,7 +52,7 @@ export default async function handler(req, res) {
       orderId: order.id,
       customerName: `${order.customer.first_name} ${order.customer.last_name}`,
       distributor: unknownItems[0].vendor,
-    }
+    };
     await sendErrorEmail("Unknown distributor", orderDetailsForEmail);
   }
 
@@ -49,7 +75,7 @@ async function sendToSexology(fullOrder, sexologyItems) {
       orderId: fullOrder.id,
       customerName: `${fullOrder.customer.first_name} ${fullOrder.customer.last_name}`,
       distributor: "sexology",
-    }
+    };
     console.error("Error sending to Sexology:", error, orderDetailsForEmail);
     await sendErrorEmail("Error sending to Sexology", orderDetailsForEmail);
     return;
@@ -71,9 +97,16 @@ async function sendToHoneysPlace(fullOrder, honeysPlaceItems) {
       orderId: fullOrder.id,
       customerName: `${fullOrder.customer.first_name} ${fullOrder.customer.last_name}`,
       distributor: "honeysplace",
-    }
-    console.error("Error sending to Honey's Place:", error, orderDetailsForEmail);
-    await sendErrorEmail("Error sending to Honey's Place", orderDetailsForEmail);
+    };
+    console.error(
+      "Error sending to Honey's Place:",
+      error,
+      orderDetailsForEmail
+    );
+    await sendErrorEmail(
+      "Error sending to Honey's Place",
+      orderDetailsForEmail
+    );
     return;
   }
 }
@@ -99,4 +132,12 @@ async function sendErrorEmail(message, orderDetailsForEmail) {
       errorMessage: message,
     }),
   });
+}
+
+function getDistributor(productId) {
+  console.log("productId:", productId);
+  const distributor = distributorMap[productId] || "whoops";
+  console.log("distributor:", distributor);
+
+  return distributor;
 }
