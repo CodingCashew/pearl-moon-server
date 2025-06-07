@@ -66,6 +66,7 @@ export default async function handler(req, res) {
       }
       console.log("Successfully sent to Honey's Place");
       // Optionally, handle the response from Honey's Place if needed
+      console.log('response.body:', await response.text());
       return response;
     } catch (error) {
       const orderDetailsForEmail = {
@@ -90,7 +91,7 @@ export default async function handler(req, res) {
     // Format the order for Honey's Place
     const account = process.env.HONEYS_PLACE_ACCOUNT;
     const password = process.env.HONEYS_PLACE_PASSWORD;
-    const reference = honeysPlaceOrder.id;
+    const reference = honeysPlaceOrder.order_number || honeysPlaceOrder.id
     // const reference = "TEST";
     const shipby = "P008";
     const date = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
@@ -125,10 +126,9 @@ export default async function handler(req, res) {
         <city>${address.city || ""}</city>
         <state>${address.province || address.state || ""}</state>
         <zip>${address.zip || address.postal_code || ""}</zip>
-        <country>${address.country || "US"}</country>
+        <country>${"US"}</country>
         <phone>${address.phone || customer.phone || ""}</phone>
         <emailaddress>${customer.email || ""}</emailaddress>
-        <instructions>${""}</instructions>
       </order>
     </HPEnvelope>`;
 
