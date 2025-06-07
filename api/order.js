@@ -127,7 +127,7 @@ export default async function handler(req, res) {
         <country>${address.country || "US"}</country>
         <phone>${address.phone || customer.phone || ""}</phone>
         <emailaddress>${customer.email || ""}</emailaddress>
-        <instructions>${fullOrder.note || ""}</instructions>
+        <instructions>${""}</instructions>
       </order>
     </HPEnvelope>`;
 
