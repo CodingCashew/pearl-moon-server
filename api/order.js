@@ -31,8 +31,9 @@ export default async function handler(req, res) {
       };
       console.log("Sending to Honey's Place:", honeysPlaceOrder);
 
-      sendToHoneysPlace(honeysPlaceOrder);
-      return res.status(200).send("Yup");
+      const result = await sendToHoneysPlace(honeysPlaceOrder);
+      console.log('Honey\'s Place response:', result);
+      return res.status(200).send("Ok");
     } catch (error) {
       console.error("Error processing Honey's Place order:", error);
       const orderDetailsForEmail = {
