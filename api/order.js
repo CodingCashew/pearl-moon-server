@@ -90,8 +90,8 @@ export default async function handler(req, res) {
     // Format the order for Honey's Place
     const account = process.env.HONEYS_PLACE_ACCOUNT;
     const password = process.env.HONEYS_PLACE_PASSWORD;
-    // const reference = honeysPlaceOrder.id || "OrderRef";
-    const reference = "TEST";
+    const reference = honeysPlaceOrder.id;
+    // const reference = "TEST";
     const shipby = "P008";
     const date = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
     const customer = honeysPlaceOrder.customer || {};
