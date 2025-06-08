@@ -1,9 +1,10 @@
 import dotenv from "dotenv";
 
-import sendToHoneysPlace from "./send-honeys-order.js"
-import sendToWilliams from "./send-williams-order.js"
-import sendToEntrenue from "./send-entrenue-order.js"
+import sendToHoneysPlace from "./send-honeys-order.js";
+import sendToWilliams from "./send-williams-order.js";
+import sendToEntrenue from "./send-entrenue-order.js";
 import { distributorMap } from "../lib/distributorMap.js";
+import sendErrorEmail from "./send-error-email.js";
 
 dotenv.config();
 
@@ -54,10 +55,9 @@ export default async function handler(req, res) {
       return res.status(500).send("Internal Server Error");
     }
   } else {
-    console.log('No Honey\'s Place items to process');
+    console.log("No Honey's Place items to process");
     // return res.status(200).send("No Honey's Place items to process");
   }
-
 
   // Williams starts here, sorry for the repeated code, Liz
   const williamsItems = order.line_items.filter(
@@ -83,17 +83,23 @@ export default async function handler(req, res) {
         customerName: `${order.customer.first_name} ${order.customer.last_name}`,
         distributor: "williams",
       };
-      await sendErrorEmail(
-        "Error processing Williams order",
-        orderDetailsForEmail
-      );
+      // await sendErrorEmail(
+      //   "Error processing Williams order",
+      //   orderDetailsForEmail
+      // );
+
+      await sendErrorEmail({
+        orderId: order.id,
+        customerName: `${order.customer.first_name} ${order.customer.last_name}`,
+        distributor: "williams",
+        timeStamp: new Date().toISOString(),
+        errorMessage: "Error processing Williams order",
+      });
       return res.status(500).send("Internal Server Error");
     }
   } else {
-    console.log('No Williams items to process');
-    // return res.status(200).send("No Honey's Place items to process");
+    console.log("No Williams items to process");
   }
-
 
   // Entrenue starts here, sorry for the repeated code, Liz
   const entrenueItems = order.line_items.filter(
@@ -119,34 +125,38 @@ export default async function handler(req, res) {
         customerName: `${order.customer.first_name} ${order.customer.last_name}`,
         distributor: "entrenue",
       };
-      await sendErrorEmail(
-        "Error processing Entrenue order",
-        orderDetailsForEmail
-      );
+      // await sendErrorEmail(
+      //   "Error processing Entrenue order",
+      //   orderDetailsForEmail
+      // );
+      await sendErrorEmail({
+        orderId: order.id,
+        customerName: `${order.customer.first_name} ${order.customer.last_name}`,
+        distributor: "entrenue",
+        timeStamp: new Date().toISOString(),
+        errorMessage: "Error processing Entrenue order",
+      });
       return res.status(500).send("Internal Server Error");
     }
   } else {
-    // return res.status(200).send("No Honey's Place items to process");
-    console.log('No Entrenue items to process');
+    console.log("No Entrenue items to process");
   }
 
+  // async function sendErrorEmail(message, orderDetailsForEmail) {
+  //   const sendErrorEmailUrl = process.env.BASE_URL;
 
-
-  async function sendErrorEmail(message, orderDetailsForEmail) {
-    const sendErrorEmailUrl = process.env.BASE_URL;
-
-    await fetch(`${sendErrorEmailUrl}/api/send-error-email`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        orderId: orderDetailsForEmail.orderId,
-        customerName: orderDetailsForEmail.customerName,
-        distributor: orderDetailsForEmail.distributor,
-        timeStamp: new Date().toISOString(),
-        errorMessage: message,
-      }),
-    });
-  }
+  //   await fetch(`${sendErrorEmailUrl}/api/send-error-email`, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       orderId: orderDetailsForEmail.orderId,
+  //       customerName: orderDetailsForEmail.customerName,
+  //       distributor: orderDetailsForEmail.distributor,
+  //       timeStamp: new Date().toISOString(),
+  //       errorMessage: message,
+  //     }),
+  //   });
+  // }
 }

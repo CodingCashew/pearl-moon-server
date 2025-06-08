@@ -1,4 +1,4 @@
-import sendErrorEmail from "./order.js";
+import sendErrorEmail from "./send-error-email.js";
 
 export default async function sendToEntrenue(entrenueOrder) {
   console.log("huzzah! in Entrenue handler. Order:", entrenueOrder);
@@ -27,14 +27,21 @@ export default async function sendToEntrenue(entrenueOrder) {
       distributor: "entrenue",
     };
     console.error("Error sending to Entrenue:", error, orderDetailsForEmail);
-    await sendErrorEmail("Error sending to Entrenue", orderDetailsForEmail);
+    // await sendErrorEmail("Error sending to Entrenue", orderDetailsForEmail);
+    await sendErrorEmail({
+      orderId: entrenueOrder.id,
+      customerName: `${entrenueOrder.customer.first_name} ${entrenueOrder.customer.last_name}`,
+      distributor: "entrenue",
+      timeStamp: new Date().toISOString(),
+      errorMessage: "Error processing Entrenue order",
+    });
     return;
   }
 }
 
 function formatEntrenueOrder(entrenueOrder) {
-  // const reference = entrenueOrder.order_number || entrenueOrder.id;
-  const reference = "TEST";
+  const reference = entrenueOrder.order_number || entrenueOrder.id;
+  // const reference = "TEST123";
   const customer = entrenueOrder.customer || {};
   const address = entrenueOrder.shipping_address || {};
   const shippingMethod = "BEST WAY";
@@ -62,10 +69,7 @@ function formatEntrenueOrder(entrenueOrder) {
       <postcode>${address.zip || address.postal_code || ""}</postcode>
       <country>${"United States"}</country>
       <shipping_method>${shippingMethod}</shipping_method>
-      <instructions></instructions>
-      <products>
-        ${productsXml}
-      </products>
+      <products>${productsXml}</products>
     </order>`;
 
   console.log("Formatted Entrenue order XML:", xml);

@@ -1,4 +1,4 @@
-import sendErrorEmail from "./order.js";
+import sendErrorEmail from "./send-error-email.js";
 
 export default async function sendToHoneysPlace(honeysPlaceOrder) {
   const honeysPlaceUrl = process.env.HONEYS_PLACE_URL || "";
@@ -16,7 +16,7 @@ export default async function sendToHoneysPlace(honeysPlaceOrder) {
       throw new Error(`Honey's Place API error: ${errorText}`);
     }
     console.log("Successfully sent to Honey's Place");
-    // Optionally, handle the response from Honey's Place if needed
+
     console.log("response.body:", await response.text());
     return response;
   } catch (error) {
@@ -30,10 +30,17 @@ export default async function sendToHoneysPlace(honeysPlaceOrder) {
       error,
       orderDetailsForEmail
     );
-    await sendErrorEmail(
-      "Error sending to Honey's Place",
-      orderDetailsForEmail
-    );
+    // await sendErrorEmail(
+    //   "Error sending to Honey's Place",
+    //   orderDetailsForEmail
+    // );
+    await sendErrorEmail({
+      orderId: order.id,
+      customerName: `${honeysPlaceOrder.customer.first_name} ${honeysPlaceOrder.customer.last_name}`,
+      distributor: "honeysplace",
+      timeStamp: new Date().toISOString(),
+      errorMessage: "Error processing Honey's Place order",
+    });
     return;
   }
 }
