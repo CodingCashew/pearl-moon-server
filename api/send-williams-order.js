@@ -40,8 +40,8 @@ export default async function sendToWilliams(williamsOrder) {
 }
 
 function formatWilliamsOrder(williamsOrder) {
-  // const reference = williamsOrder.order_number || williamsOrder.id;
-  const reference = "TEST";
+  const reference = williamsOrder.order_number || williamsOrder.id;
+  // const reference = "TEST";
   const customer = williamsOrder.customer || {};
   const address = williamsOrder.shipping_address || {};
   const shippingMethod = "BESTRATE";
