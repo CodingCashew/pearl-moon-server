@@ -15,6 +15,7 @@ export default async function handler(req, res) {
 
   let order = req.body;
   console.log("Received order:", order);
+
   if (!order || !order.line_items) {
     sendErrorEmail("Invalid order data", {
       orderId: order.id || "unknown",
@@ -36,10 +37,9 @@ export default async function handler(req, res) {
     };
 
     try {
-      console.log("Sending to Honey's Place:", honeysPlaceOrder);
+      const response = await sendToHoneysPlace(honeysPlaceOrder);
+      console.log("Honey's Place response:", response);
 
-      const result = await sendToHoneysPlace(honeysPlaceOrder);
-      console.log("Honey's Place response:", result);
       return res.status(200).send("Ok");
     } catch (error) {
       console.error("Error processing Honey's Place order:", error);
@@ -56,7 +56,6 @@ export default async function handler(req, res) {
     }
   } else {
     console.log("No Honey's Place items to process");
-    // return res.status(200).send("No Honey's Place items to process");
   }
 
   // Williams starts here, sorry for the repeated code, Liz
@@ -71,26 +70,16 @@ export default async function handler(req, res) {
     };
 
     try {
-      console.log("Sending to Williams:", williamsOrder);
+      const response = await sendToWilliams(williamsOrder);
+      console.log("Williams response:", response);
 
-      const result = await sendToWilliams(williamsOrder);
-      console.log("Williams response:", result);
       return res.status(200).send("Ok");
     } catch (error) {
       console.error("Error processing Williams order:", error);
-      const orderDetailsForEmail = {
-        orderId: order.id,
-        customerName: `${order.customer.first_name} ${order.customer.last_name}`,
-        distributor: "williams",
-      };
-      // await sendErrorEmail(
-      //   "Error processing Williams order",
-      //   orderDetailsForEmail
-      // );
 
       await sendErrorEmail({
-        orderId: order.id,
-        customerName: `${order.customer.first_name} ${order.customer.last_name}`,
+        orderId: williamsOrder.id,
+        customerName: `${williamsOrder.customer.first_name} ${williamsOrder.customer.last_name}`,
         distributor: "williams",
         timeStamp: new Date().toISOString(),
         errorMessage: "Error processing Williams order",
@@ -113,25 +102,16 @@ export default async function handler(req, res) {
     };
 
     try {
-      console.log("Sending to Entrenue:", entrenueOrder);
+      const response = await sendToEntrenue(entrenueOrder);
+      console.log("Entrenue response:", response);
 
-      const result = await sendToEntrenue(entrenueOrder);
-      console.log("Entrenue response:", result);
       return res.status(200).send("Ok");
     } catch (error) {
       console.error("Error processing Entrenue order:", error);
-      const orderDetailsForEmail = {
-        orderId: order.id,
-        customerName: `${order.customer.first_name} ${order.customer.last_name}`,
-        distributor: "entrenue",
-      };
-      // await sendErrorEmail(
-      //   "Error processing Entrenue order",
-      //   orderDetailsForEmail
-      // );
+
       await sendErrorEmail({
-        orderId: order.id,
-        customerName: `${order.customer.first_name} ${order.customer.last_name}`,
+        orderId: orentrenueOrderder.id,
+        customerName: `${entrenueOrder.customer.first_name} ${entrenueOrder.customer.last_name}`,
         distributor: "entrenue",
         timeStamp: new Date().toISOString(),
         errorMessage: "Error processing Entrenue order",
@@ -141,22 +121,4 @@ export default async function handler(req, res) {
   } else {
     console.log("No Entrenue items to process");
   }
-
-  // async function sendErrorEmail(message, orderDetailsForEmail) {
-  //   const sendErrorEmailUrl = process.env.BASE_URL;
-
-  //   await fetch(`${sendErrorEmailUrl}/api/send-error-email`, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       orderId: orderDetailsForEmail.orderId,
-  //       customerName: orderDetailsForEmail.customerName,
-  //       distributor: orderDetailsForEmail.distributor,
-  //       timeStamp: new Date().toISOString(),
-  //       errorMessage: message,
-  //     }),
-  //   });
-  // }
 }
