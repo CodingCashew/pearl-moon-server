@@ -8,7 +8,7 @@ dotenvConfig();
 
 // Run at 12 noon, 4pm, and 8pm Central Time
 cron.schedule(
-  "0 30 12,16,20 * * *",
+  "0 0 12,16,20 * * *",
   async () => {
     console.log(
       `[${new Date().toISOString()}] Running scheduled order status check...`
@@ -21,7 +21,7 @@ cron.schedule(
         subject: "Scheduled Order Check",
         body: "Checking order statuses and notifying customers at 12:30, 4:30, 8:30.",
       });
-      return;
+
       await checkAndNotifyCustomers();
       console.log(
         `[${new Date().toISOString()}] Scheduled order check completed`

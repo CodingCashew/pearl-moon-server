@@ -14,11 +14,7 @@ export async function shippingCodeToBaseTrackingUrl(
   };
   console.log("carrierName, trackingNumber:", carrierName, trackingNumber);
 
-  if (
-    !carrierName ||
-    !trackingNumber ||
-    !baseUrls.hasOwnProperty(carrierName)
-  ) {
+  if (!carrierName || !trackingNumber || !(carrierName in baseUrls)) {
     await sendErrorEmail({
       orderId: "unknown",
       customerName: "unknown",
