@@ -52,13 +52,11 @@ ADMIN_EMAIL=admin@yourdomain.com
 ## Setup Requirements
 
 1. **Shopify Setup**:
-
    - Create custom fulfillment service named "pearl-moon-server-nalpac"
    - Assign products to this fulfillment service
    - Configure webhook to trigger `/api/order` on new orders
 
 2. **Nalpac Setup**:
-
    - API credentials with order creation and status checking permissions
 
 3. **Permissions**:

@@ -100,9 +100,7 @@
   "order_status_url": "https://www.pearlmoonpleasures.com/74625581307/orders/b49a18741450666fda0b0835b1c5c035/authenticate?key=79d67c267aaf46826f27479f1cd42f85",
   "original_total_additional_fees_set": null,
   "original_total_duties_set": null,
-  "payment_gateway_names": [
-    "shopify_payments"
-  ],
+  "payment_gateway_names": ["shopify_payments"],
   "phone": null,
   "po_number": null,
   "presentment_currency": "USD",

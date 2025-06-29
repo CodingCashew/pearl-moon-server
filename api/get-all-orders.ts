@@ -1,7 +1,10 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+import type { VercelRequest, VercelResponse } from "@vercel/node";
 
 // TODO: Add a time or status constraint to this once I start scaling
-export default async function getAllOrders(req: VercelRequest, res: VercelResponse): Promise<void> {
+export default async function getAllOrders(
+  req: VercelRequest,
+  res: VercelResponse
+): Promise<void> {
   const nalpacUrl = process.env.NALPAC_URL || "";
   const username = process.env.NALPAC_ACCOUNT_EMAIL || "";
   const password = process.env.NALPAC_PASSWORD || "";

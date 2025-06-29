@@ -1,6 +1,9 @@
 import { VercelRequest, VercelResponse } from "@vercel/node";
 
-export default async function getOrderStatus(req: VercelRequest, res: VercelResponse) {
+export default async function getOrderStatus(
+  req: VercelRequest,
+  res: VercelResponse
+) {
   console.log("req.body:", req.body);
   // console.log("req.params:", req.params);
   const nalpacUrl = process.env.NALPAC_URL || "";
@@ -10,8 +13,7 @@ export default async function getOrderStatus(req: VercelRequest, res: VercelResp
   // Create Basic Auth credentials
   const credentials = btoa(`${username}:${password}`);
 
-  const orderNumber =
-    req.body.orderNumber || req.query.orderNumber;
+  const orderNumber = req.body.orderNumber || req.query.orderNumber;
   if (!orderNumber) {
     console.error("No order number provided in request body or query");
     return res.status(400).send("Bad Request; No order number provided");
