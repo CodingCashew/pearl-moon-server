@@ -1,9 +1,8 @@
-export default async function sendErrorEmail({ orderId, customerName, distributor, timeStamp, errorMessage }) {
+export default async function sendErrorEmail({ orderId, customerName = "Bernie", timeStamp, errorMessage }: { orderId: string; customerName?: string; timeStamp: string; errorMessage: string; }) {
   try {
     const templateParams = {
       orderId,
       customerName,
-      distributor,
       timeStamp,
       errorMessage,
     };

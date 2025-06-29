@@ -1,0 +1,354 @@
+{
+  "id": 6399793266939,
+  "admin_graphql_api_id": "gid://shopify/Order/6399793266939",
+  "app_id": 580111,
+  "browser_ip": "2600:8803:d902:be00:e900:d7e5:d208:e3d3",
+  "buyer_accepts_marketing": true,
+  "cancel_reason": null,
+  "cancelled_at": null,
+  "cart_token": "hWN01hasLEHnno4jJcHoHnyz",
+  "checkout_id": 37487044755707,
+  "checkout_token": "72825b8f828d31a88b7ebbf4dc7a6368",
+  "client_details": {
+    "accept_language": "en-US",
+    "browser_height": null,
+    "browser_ip": "2600:8803:d902:be00:e900:d7e5:d208:e3d3",
+    "browser_width": null,
+    "session_hash": null,
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+  },
+  "closed_at": null,
+  "confirmation_number": "UV7MT8XWG",
+  "confirmed": true,
+  "contact_email": "lyzeuph@gmail.com",
+  "created_at": "2025-06-28T21:13:18-05:00",
+  "currency": "USD",
+  "current_shipping_price_set": {
+    "shop_money": {
+      "amount": "6.95",
+      "currency_code": "USD"
+    },
+    "presentment_money": {
+      "amount": "6.95",
+      "currency_code": "USD"
+    }
+  },
+  "current_subtotal_price": "15.00",
+  "current_subtotal_price_set": {
+    "shop_money": {
+      "amount": "15.00",
+      "currency_code": "USD"
+    },
+    "presentment_money": {
+      "amount": "15.00",
+      "currency_code": "USD"
+    }
+  },
+  "current_total_additional_fees_set": null,
+  "current_total_discounts": "0.00",
+  "current_total_discounts_set": {
+    "shop_money": {
+      "amount": "0.00",
+      "currency_code": "USD"
+    },
+    "presentment_money": {
+      "amount": "0.00",
+      "currency_code": "USD"
+    }
+  },
+  "current_total_duties_set": null,
+  "current_total_price": "23.25",
+  "current_total_price_set": {
+    "shop_money": {
+      "amount": "23.25",
+      "currency_code": "USD"
+    },
+    "presentment_money": {
+      "amount": "23.25",
+      "currency_code": "USD"
+    }
+  },
+  "current_total_tax": "1.30",
+  "current_total_tax_set": {
+    "shop_money": {
+      "amount": "1.30",
+      "currency_code": "USD"
+    },
+    "presentment_money": {
+      "amount": "1.30",
+      "currency_code": "USD"
+    }
+  },
+  "customer_locale": "en-US",
+  "device_id": null,
+  "discount_codes": [],
+  "duties_included": false,
+  "email": "lyzeuph@gmail.com",
+  "estimated_taxes": false,
+  "financial_status": "paid",
+  "fulfillment_status": null,
+  "landing_site": "/recommendations/products?limit=4&product_id=8977308975355&section_id=template--19130437992699__related-products",
+  "landing_site_ref": null,
+  "location_id": null,
+  "merchant_business_entity_id": "MTc0NjI1NTgxMzA3",
+  "merchant_of_record_app_id": null,
+  "name": "#1030",
+  "note": null,
+  "note_attributes": [],
+  "number": 30,
+  "order_number": 1030,
+  "order_status_url": "https://www.pearlmoonpleasures.com/74625581307/orders/b49a18741450666fda0b0835b1c5c035/authenticate?key=79d67c267aaf46826f27479f1cd42f85",
+  "original_total_additional_fees_set": null,
+  "original_total_duties_set": null,
+  "payment_gateway_names": [
+    "shopify_payments"
+  ],
+  "phone": null,
+  "po_number": null,
+  "presentment_currency": "USD",
+  "processed_at": "2025-06-28T21:13:16-05:00",
+  "reference": null,
+  "referring_site": "https://pay.shopify.com/",
+  "source_identifier": null,
+  "source_name": "web",
+  "source_url": null,
+  "subtotal_price": "15.00",
+  "subtotal_price_set": {
+    "shop_money": {
+      "amount": "15.00",
+      "currency_code": "USD"
+    },
+    "presentment_money": {
+      "amount": "15.00",
+      "currency_code": "USD"
+    }
+  },
+  "tags": "",
+  "tax_exempt": false,
+  "tax_lines": [
+    {
+      "price": "0.62",
+      "rate": 0.04125,
+      "title": "Oklahoma City City Tax",
+      "price_set": {},
+      "channel_liable": false
+    },
+    {
+      "price": "0.68",
+      "rate": 0.045,
+      "title": "Oklahoma State Tax",
+      "price_set": {},
+      "channel_liable": false
+    }
+  ],
+  "taxes_included": false,
+  "test": false,
+  "token": "b49a18741450666fda0b0835b1c5c035",
+  "total_cash_rounding_payment_adjustment_set": {
+    "shop_money": {
+      "amount": "0.00",
+      "currency_code": "USD"
+    },
+    "presentment_money": {
+      "amount": "0.00",
+      "currency_code": "USD"
+    }
+  },
+  "total_cash_rounding_refund_adjustment_set": {
+    "shop_money": {
+      "amount": "0.00",
+      "currency_code": "USD"
+    },
+    "presentment_money": {
+      "amount": "0.00",
+      "currency_code": "USD"
+    }
+  },
+  "total_discounts": "0.00",
+  "total_discounts_set": {
+    "shop_money": {
+      "amount": "0.00",
+      "currency_code": "USD"
+    },
+    "presentment_money": {
+      "amount": "0.00",
+      "currency_code": "USD"
+    }
+  },
+  "total_line_items_price": "15.00",
+  "total_line_items_price_set": {
+    "shop_money": {
+      "amount": "15.00",
+      "currency_code": "USD"
+    },
+    "presentment_money": {
+      "amount": "15.00",
+      "currency_code": "USD"
+    }
+  },
+  "total_outstanding": "0.00",
+  "total_price": "23.25",
+  "total_price_set": {
+    "shop_money": {
+      "amount": "23.25",
+      "currency_code": "USD"
+    },
+    "presentment_money": {
+      "amount": "23.25",
+      "currency_code": "USD"
+    }
+  },
+  "total_shipping_price_set": {
+    "shop_money": {
+      "amount": "6.95",
+      "currency_code": "USD"
+    },
+    "presentment_money": {
+      "amount": "6.95",
+      "currency_code": "USD"
+    }
+  },
+  "total_tax": "1.30",
+  "total_tax_set": {
+    "shop_money": {
+      "amount": "1.30",
+      "currency_code": "USD"
+    },
+    "presentment_money": {
+      "amount": "1.30",
+      "currency_code": "USD"
+    }
+  },
+  "total_tip_received": "0.00",
+  "total_weight": 450,
+  "updated_at": "2025-06-28T21:13:21-05:00",
+  "user_id": null,
+  "billing_address": {
+    "first_name": "Elizabeth",
+    "address1": "2744 Cambridge Court",
+    "phone": "+14053617234",
+    "city": "Oklahoma City",
+    "zip": "73116",
+    "province": "Oklahoma",
+    "country": "United States",
+    "last_name": "Blackledge",
+    "address2": null,
+    "company": null,
+    "latitude": 35.5422153,
+    "longitude": -97.56175499999999,
+    "name": "Elizabeth Blackledge",
+    "country_code": "US",
+    "province_code": "OK"
+  },
+  "customer": {
+    "id": 8086235185403,
+    "email": "lyzeuph@gmail.com",
+    "created_at": "2025-03-28T21:14:33-05:00",
+    "updated_at": "2025-06-28T21:13:19-05:00",
+    "first_name": "Liz",
+    "last_name": "Blackledge",
+    "state": "disabled",
+    "note": null,
+    "verified_email": true,
+    "multipass_identifier": null,
+    "tax_exempt": false,
+    "phone": null,
+    "currency": "USD",
+    "tax_exemptions": [],
+    "admin_graphql_api_id": "gid://shopify/Customer/8086235185403",
+    "default_address": {
+      "id": 9746942623995,
+      "customer_id": 8086235185403,
+      "first_name": "Liz",
+      "last_name": "Blackledge",
+      "company": null,
+      "address1": "2744 Cambridge Court",
+      "address2": null,
+      "city": "Oklahoma City",
+      "province": "Oklahoma",
+      "country": "United States",
+      "zip": "73116",
+      "phone": "+14053617234",
+      "name": "Liz Blackledge",
+      "province_code": "OK",
+      "country_code": "US",
+      "country_name": "United States",
+      "default": true
+    }
+  },
+  "discount_applications": [],
+  "fulfillments": [],
+  "line_items": [
+    {
+      "id": 15861438447867,
+      "admin_graphql_api_id": "gid://shopify/LineItem/15861438447867",
+      "attributed_staffs": [],
+      "current_quantity": 1,
+      "fulfillable_quantity": 1,
+      "fulfillment_service": "pearl-moon-server-nalpac",
+      "fulfillment_status": null,
+      "gift_card": false,
+      "grams": 450,
+      "name": "Playground Date Night",
+      "price": "15.00",
+      "price_set": {},
+      "product_exists": true,
+      "product_id": 8978511986939,
+      "properties": [],
+      "quantity": 1,
+      "requires_shipping": true,
+      "sales_line_item_group_id": null,
+      "sku": "89574",
+      "taxable": true,
+      "title": "Playground Date Night",
+      "total_discount": "0.00",
+      "total_discount_set": {},
+      "variant_id": 47009000390907,
+      "variant_inventory_management": "shopify",
+      "variant_title": null,
+      "vendor": "HelloPlayground/Playground For All, Inc.",
+      "tax_lines": [],
+      "duties": [],
+      "discount_allocations": []
+    }
+  ],
+  "payment_terms": null,
+  "refunds": [],
+  "shipping_address": {
+    "first_name": "Liz",
+    "address1": "2744 Cambridge Court",
+    "phone": "+14053617234",
+    "city": "Oklahoma City",
+    "zip": "73116",
+    "province": "Oklahoma",
+    "country": "United States",
+    "last_name": "Blackledge",
+    "address2": null,
+    "company": null,
+    "latitude": 35.5422153,
+    "longitude": -97.56175499999999,
+    "name": "Liz Blackledge",
+    "country_code": "US",
+    "province_code": "OK"
+  },
+  "shipping_lines": [
+    {
+      "id": 5204886585595,
+      "carrier_identifier": null,
+      "code": "USPS - Road transport",
+      "current_discounted_price_set": {},
+      "discounted_price": "6.95",
+      "discounted_price_set": {},
+      "is_removed": false,
+      "phone": null,
+      "price": "6.95",
+      "price_set": {},
+      "requested_fulfillment_service_id": null,
+      "source": "shopify",
+      "title": "USPS - Road transport",
+      "tax_lines": [],
+      "discount_allocations": []
+    }
+  ],
+  "returns": []
+}

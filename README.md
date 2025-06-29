@@ -1,74 +1,99 @@
-# Shopify Order Webhook to Distributor Integration
+# Pearl Moon Server - Nalpac Integration
 
-This lightweight Node.js server receives Shopify order webhooks and forwards them to the appropriate dropship distributor based on product metadata. Built with Vercel serverless functions for fast and scalable deployment.
+Automated system to manage orders between Shopify and Nalpac distributor, with automatic tracking number updates.
 
-## 🚀 Features
+## Features
 
-- Listens to Shopify's `orders/create` webhook
-- Determines the correct distributor per line item
-- Sends formatted order requests to the correct distributor API
-- Notifies you on failure (via email, Slack, etc.)
-- Minimal setup — no database or frontend
-- Scalable for multiple distributors
+- **Order Processing**: Sends Shopify orders to Nalpac for fulfillment
+- **Status Monitoring**: Periodically checks Nalpac for shipped orders
+- **Automatic Tracking**: Sends tracking numbers from Nalpac back to Shopify
+- **Error Handling**: Email notifications for failed orders
+- **Inventory Management**: Shopify handles inventory automatically
 
-## 📁 Project Structure
+## Architecture
+
+### API Endpoints (`/api/`)
+
+- `order.ts` - Main order processing endpoint (receives Shopify webhooks)
+- `get-order-status.ts` - Get individual order status from Nalpac
+- `get-all-orders.ts` - Get all orders from Nalpac
+- `send-nalpac-order.ts` - Send order to Nalpac for fulfillment
+- `send-tracking-number-to-shopify.ts` - Update Shopify with tracking info
+- `send-error-email.ts` - Error notification system
+- `check-for-order-status-updates.ts` - Automated status checking
+
+### Libraries (`/lib/`)
+
+- `order-type.ts` - TypeScript interfaces for order data
+- `shippingCodeToBaseTrackingUrl.ts` - Tracking URL generation
+
+### Automation
+
+- `cron-scheduler.js` - Scheduled tasks for order status monitoring
+- `data/previous-orders.json` - State storage for change detection
+
+## Deployment
+
+This is deployed on Vercel with the following environment variables required:
+
 ```
-/api
-└── order.js # Main webhook endpoint
-/lib
-├── sendToSexology.js # Example: logic to forward order to a distributor
-├── sendToOther.js # Another distributor (if needed)
-├── notifyError.js # Error notification logic (email, Slack, etc.)
-└── utils.js # Utility functions (e.g., parsing metafields)
+SHOPIFY_STORE_URL=https://your-store.myshopify.com
+SHOPIFY_ACCESS_TOKEN=your-access-token
+NALPAC_URL=https://nalpac-api-url
+NALPAC_ACCOUNT_EMAIL=your-nalpac-email
+NALPAC_PASSWORD=your-nalpac-password
+SMTP_HOST=your-smtp-host
+SMTP_PORT=587
+SMTP_USER=your-smtp-user
+SMTP_PASS=your-smtp-password
+ADMIN_EMAIL=admin@yourdomain.com
 ```
 
-## 🛠️ Setup
+## Setup Requirements
 
-1. **Clone the repo**
+1. **Shopify Setup**:
+
+   - Create custom fulfillment service named "pearl-moon-server-nalpac"
+   - Assign products to this fulfillment service
+   - Configure webhook to trigger `/api/order` on new orders
+
+2. **Nalpac Setup**:
+
+   - API credentials with order creation and status checking permissions
+
+3. **Permissions**:
+   - Shopify: `read_orders`, `write_orders`, `read_fulfillments`, `write_fulfillments`
+
+## Workflow
+
+1. Customer places order on Shopify
+2. Shopify webhook triggers `/api/order`
+3. Order is sent to Nalpac for fulfillment
+4. Cron job periodically checks Nalpac for status updates
+5. When order ships, tracking number is sent back to Shopify
+6. Shopify creates fulfillment and updates customer
+
+## Development
 
 ```bash
-git clone https://github.com/CodingCashew/pearl-moon-server.git
-cd pearl-moon-server
-
-2. Install dependencies
-```
 npm install
-```
-3. Set up environment variables
-Create a .env file or use the Vercel dashboard to store:
-```
-SHOPIFY_WEBHOOK_SECRET=your_webhook_secret
-DISTRIBUTOR_API_KEY=your_distributor_key
-NOTIFY_EMAIL=you@example.com
+npm run dev
 ```
 
-4. Deploy to Vercel
-```
-vercel
-```
-Vercel will provide you with a public URL like: 
-https://your-project-name.vercel.app/api/order
+## Running Locally
 
-5. Register Webhook with Shopify
-In the Shopify admin or via Admin API, point the orders/create webhook to your Vercel endpoint.
-
-⚠️ Error Handling
-On failure to reach a distributor or if the order data is invalid:
-
-The server will trigger a notification via your configured method (e.g., email or Slack).
-
-You can manually fulfill the order as a fallback.
-
-✅ Future Plans
-Add optional dashboard for retrying failed orders
-
-Support inventory syncing via cron or real-time feeds
-
-OAuth and multi-store support (if needed)
-
-# Running it locally
+```bash
+# Start development server
 vercel dev
 
-# Postman
-POST to https://pearl-moon-server.vercel.app/api/order
-POST to http://localhost:3000/api/order
+# Run cron job manually
+npx tsx cron-scheduler.js
+```
+
+## API Endpoints
+
+- `POST /api/order` - Process new Shopify orders
+- `GET /api/get-order-status?orderNumber=123` - Check order status
+- `GET /api/get-all-orders` - Get all orders from Nalpac
+
+Built with TypeScript, Node.js, and deployed on Vercel.
