@@ -1,0 +1,13 @@
+{
+  "functions": {
+    "api/**/*.ts": {
+      "runtime": "@vercel/node@3.0.0"
+    }
+  },
+  "crons": [
+    {
+      "path": "/api/cron",
+      "schedule": "50 35 17,21,1 * * *"
+    }
+  ]
+}

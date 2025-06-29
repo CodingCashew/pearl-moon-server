@@ -16,6 +16,9 @@ async function sendTrackingNumberToShopify(
   //   trackingUrl
   // );
 
+  // TODO: remove this!!!
+  // externalOrderNumber = "1030"
+
   const shopifyStoreUrl = process.env.SHOPIFY_STORE_URL;
   const accessToken = process.env.SHOPIFY_ACCESS_TOKEN;
 
@@ -75,7 +78,7 @@ async function sendTrackingNumberToShopify(
         order.name === `#${externalOrderNumber}` ||
         order.order_number === externalOrderNumber
     );
-    console.log('theShopifyOrderThatMatches:', theShopifyOrderThatMatches);
+    console.log("theShopifyOrderThatMatches:", theShopifyOrderThatMatches);
     // console.log('this should be 6369697923323:', theShopifyOrderThatMatches.id);
 
     // console.log(

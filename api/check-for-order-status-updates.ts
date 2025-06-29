@@ -1,6 +1,6 @@
 import fs from "fs/promises";
 import path from "path";
-import { sendTrackingNumberToShopify } from "./send-tracking-number-to-shopify-rest.js";
+import { sendTrackingNumberToShopify } from "./send-tracking-number-to-shopify.js";
 import { fileURLToPath } from "url";
 import { config } from "dotenv";
 import { shippingCodeToBaseTrackingUrl } from "../lib/shippingCodeToBaseTrackingUrl.js";

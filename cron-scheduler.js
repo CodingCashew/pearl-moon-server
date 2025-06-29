@@ -1,18 +1,27 @@
 import cron from "node-cron";
 import { config as dotenvConfig } from "dotenv";
 import { checkAndNotifyCustomers } from "./api/check-for-order-status-updates.ts";
+import sendLizNotification from "./api/send-liz-notification.js";
 
 // Load environment variables
 dotenvConfig();
 
 // Run at 12 noon, 4pm, and 8pm Central Time
 cron.schedule(
-  "50 12 12,20,20 * * *",
+  "0 30 12,16,20 * * *",
   async () => {
     console.log(
       `[${new Date().toISOString()}] Running scheduled order status check...`
     );
     try {
+      await sendLizNotification({
+        type: "Scheduled Order Check",
+        action: "Checking order statuses and notifying customers",
+        timeStamp: new Date().toISOString(),
+        subject: "Scheduled Order Check",
+        body: "Checking order statuses and notifying customers at 12:30, 4:30, 8:30.",
+      });
+      return;
       await checkAndNotifyCustomers();
       console.log(
         `[${new Date().toISOString()}] Scheduled order check completed`
