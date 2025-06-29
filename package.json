@@ -4,10 +4,9 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "vercel dev",
+    "serve": "vercel dev",
     "lint": "eslint .",
     "cron": "npx tsx cron-scheduler.js",
-    "build": "tsc",
     "type-check": "tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check ."

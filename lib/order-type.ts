@@ -1,8 +1,10 @@
+// TODO: Create separate interfaces for Shopify and Nalpac orders
 export interface Order {
   id: string;
   order_number: string;
   name: string;
   external_order_number?: string; // Optional, used for Nalpac orders
+  ExternalOrderNumber?: string;
   customer: {
     first_name: string;
     last_name: string;

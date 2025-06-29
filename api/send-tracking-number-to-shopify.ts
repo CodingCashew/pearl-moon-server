@@ -151,7 +151,7 @@ async function sendTrackingNumberToShopify(
           query: fulfillmentMutation,
           variables: {
             fulfillment: {
-              lineItems: fulfillmentOrders.map((edge) => ({
+              lineItems: fulfillmentOrders.map((edge: any) => ({
                 fulfillmentOrderId: edge.node.id,
                 quantity: 1,
               })),
@@ -196,7 +196,7 @@ async function sendTrackingNumberToShopify(
       const errors = data.data.fulfillmentCreateV2.userErrors;
       console.error("GraphQL user errors:", errors);
       throw new Error(
-        `GraphQL errors: ${errors.map((e) => e.message).join(", ")}`
+        `GraphQL errors: ${errors.map((e:any) => e.message).join(", ")}`
       );
     }
 

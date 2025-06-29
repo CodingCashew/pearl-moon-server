@@ -1,9 +1,10 @@
 import fs from "fs/promises";
 import path from "path";
-import { sendTrackingNumberToShopify } from "./send-tracking-number-to-shopify-rest.ts";
+import { sendTrackingNumberToShopify } from "./send-tracking-number-to-shopify-rest.js";
 import { fileURLToPath } from "url";
 import { config } from "dotenv";
-import { shippingCodeToBaseTrackingUrl } from "../lib/shippingCodeToBaseTrackingUrl.ts";
+import { shippingCodeToBaseTrackingUrl } from "../lib/shippingCodeToBaseTrackingUrl.js";
+import { Order } from "../lib/order-type.js";
 
 // Load environment variables
 config();
@@ -85,7 +86,7 @@ async function checkAndNotifyCustomers() {
   if (currentResponse.Orders) {
     for (const order of currentResponse.Orders) {
       const previousOrder = previousResponse.Orders.find(
-        (prevOrder) =>
+        (prevOrder: Order) =>
           prevOrder.ExternalOrderNumber === order.ExternalOrderNumber
       );
 
@@ -147,7 +148,7 @@ async function checkAndNotifyCustomers() {
   await saveCurrentResponse(currentResponse);
 }
 
-async function saveCurrentResponse(response) {
+async function saveCurrentResponse(response: Order) {
   try {
     // Ensure the data directory exists
     await fs.mkdir(path.dirname(DATA_FILE_PATH), { recursive: true });
@@ -164,7 +165,11 @@ async function saveCurrentResponse(response) {
   }
 }
 
-async function sendTrackingNotification(orderId, trackingNumber, trackingUrl) {
+async function sendTrackingNotification(
+  orderId: string,
+  trackingNumber: string,
+  trackingUrl: string
+) {
   try {
     // Use your existing Shopify tracking function
     await sendTrackingNumberToShopify(orderId, trackingNumber, trackingUrl);
