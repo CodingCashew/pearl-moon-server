@@ -1,10 +1,5 @@
 {
-  "functions": {
-    "api/**/*.ts": {
-      "runtime": "@vercel/node@3"
-    }
-  },
-  "buildCommand": "tsc --noEmit",
+  "buildCommand": "npm run build",
   "devCommand": "npm run serve",
   "installCommand": "npm install"
 }
