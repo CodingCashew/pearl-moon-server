@@ -1,6 +1,5 @@
 import sendErrorEmail from "./send-error-email.js";
 import { config } from "dotenv";
-import { sendTrackingNumberToShopifyGraphQL } from "./send-tracking-number-to-shopify-graphql.js";
 
 /**
  * Sends tracking numbers to Shopify orders using the best available API approach
@@ -32,39 +31,9 @@ async function sendTrackingNumberToShopify(
   );
 
   try {
-    // Strategy: Try GraphQL first, fall back to hybrid approach if needed
-    console.log("🔄 Attempting modern GraphQL fulfillment approach...");
+    // Use hybrid GraphQL+REST approach for maximum compatibility
+    console.log("🔄 Using hybrid GraphQL+REST fulfillment approach...");
 
-    try {
-      await sendTrackingNumberToShopifyGraphQL(
-        externalOrderNumber,
-        trackingNumber,
-        trackingUrl
-      );
-
-      console.log("✅ Successfully completed fulfillment using GraphQL!");
-      return; // Success! No need for fallback
-    } catch (graphqlError) {
-      console.log(
-        "⚠️  GraphQL approach failed:",
-        (graphqlError as Error).message
-      );
-
-      // Check if it's a permissions issue
-      if (
-        (graphqlError as Error).message.includes(
-          "fulfillmentOrders access denied"
-        )
-      ) {
-        console.log("🔄 Falling back to hybrid GraphQL+REST approach...");
-        // Continue to fallback implementation below
-      } else {
-        // Re-throw non-permission errors
-        throw graphqlError;
-      }
-    }
-
-    // Fallback: Hybrid GraphQL+REST approach
     await sendTrackingNumberToShopifyHybrid(
       externalOrderNumber,
       trackingNumber,
