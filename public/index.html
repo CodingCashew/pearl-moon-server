@@ -1,68 +1,73 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pearl Moon Server API</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-            line-height: 1.6;
-            color: #333;
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        .api-endpoint {
-            background: #f4f4f4;
-            padding: 10px;
-            border-radius: 5px;
-            margin: 10px 0;
-            font-family: monospace;
-        }
-        .status {
-            color: #28a745;
-            font-weight: bold;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        line-height: 1.6;
+        color: #333;
+      }
+      .header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+      .api-endpoint {
+        background: #f4f4f4;
+        padding: 10px;
+        border-radius: 5px;
+        margin: 10px 0;
+        font-family: monospace;
+      }
+      .status {
+        color: #28a745;
+        font-weight: bold;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="header">
-        <h1>🌙 Pearl Moon Server API</h1>
-        <p class="status">✅ API Services Running</p>
+      <h1>🌙 Pearl Moon Server API</h1>
+      <p class="status">✅ API Services Running</p>
     </div>
-    
+
     <h2>Available API Endpoints</h2>
-    
+
     <div class="api-endpoint">
-        <strong>POST</strong> /api/sync-inventory<br>
-        <small>Sync inventory from Nalpac to Shopify</small>
+      <strong>POST</strong> /api/sync-inventory<br />
+      <small>Sync inventory from Nalpac to Shopify</small>
     </div>
-    
+
     <div class="api-endpoint">
-        <strong>POST</strong> /api/send-nalpac-order<br>
-        <small>Send order to Nalpac for fulfillment</small>
+      <strong>POST</strong> /api/send-nalpac-order<br />
+      <small>Send order to Nalpac for fulfillment</small>
     </div>
-    
+
     <div class="api-endpoint">
-        <strong>POST</strong> /api/send-tracking-number-to-shopify<br>
-        <small>Update Shopify order with tracking information</small>
+      <strong>POST</strong> /api/send-tracking-number-to-shopify<br />
+      <small>Update Shopify order with tracking information</small>
     </div>
-    
+
     <div class="api-endpoint">
-        <strong>GET</strong> /api/get-order-status<br>
-        <small>Check order status from Nalpac</small>
+      <strong>GET</strong> /api/get-order-status<br />
+      <small>Check order status from Nalpac</small>
     </div>
-    
+
     <div class="api-endpoint">
-        <strong>POST</strong> /api/check-for-order-status-updates<br>
-        <small>Check for order status updates and notify customers</small>
+      <strong>POST</strong> /api/check-for-order-status-updates<br />
+      <small>Check for order status updates and notify customers</small>
     </div>
-    
-    <p><small>🔒 All endpoints require proper authentication and are designed for internal use.</small></p>
-</body>
+
+    <p>
+      <small
+        >🔒 All endpoints require proper authentication and are designed for
+        internal use.</small
+      >
+    </p>
+  </body>
 </html>

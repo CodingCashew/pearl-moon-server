@@ -7,6 +7,18 @@ set-missing-to-zero.ts
 test-inventory-sync.ts
 verify-setup.ts
 
+# API functions for EC2 server only (cron jobs and background tasks)
+
+api/cron.ts
+api/check-for-order-status-updates.ts
+api/sync-inventory.ts
+
+# Alternative/duplicate API implementations (keep only the main ones)
+
+api/send-tracking-number-to-shopify-clean.ts
+api/send-tracking-number-to-shopify-graphql.ts
+api/send-tracking-number-to-shopify-rest.ts
+
 # Deployment scripts (for EC2 server only)
 
 deploy-to-ec2.sh
