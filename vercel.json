@@ -1,5 +1,3 @@
 {
-  "buildCommand": "npm run build",
-  "devCommand": "npm run serve",
-  "installCommand": "npm install"
+  "version": 2
 }
