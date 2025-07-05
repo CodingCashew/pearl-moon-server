@@ -1,0 +1,44 @@
+{
+  "name": "pearl-moon-server",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "serve": "vercel dev",
+    "build": "tsc --noEmit",
+    "vercel-build": "echo 'TypeScript compilation check' && tsc --noEmit",
+    "lint": "eslint .",
+    "cron": "npx tsx cron-scheduler.js",
+    "type-check": "tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "sync:quick": "npx tsx sync-quick.ts",
+    "sync:deep": "npx tsx sync-deep.ts",
+    "sync:test": "npx tsx test-inventory-sync.ts",
+    "find-missing": "npx tsx find-missing-skus.ts",
+    "set-missing-zero": "npx tsx set-missing-to-zero.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "Pearl Moon Server - Inventory sync and order management",
+  "dependencies": {
+    "@shopify/shopify-api": "^11.13.0",
+    "dotenv": "^16.6.1",
+    "emailjs": "^4.0.3",
+    "node-cron": "^4.1.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.28.0",
+    "@types/node": "^24.0.7",
+    "@typescript-eslint/eslint-plugin": "^8.35.1",
+    "@typescript-eslint/parser": "^8.35.1",
+    "@vercel/node": "^5.3.0",
+    "eslint": "^9.28.0",
+    "globals": "^16.2.0",
+    "prettier": "^3.6.2",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  }
+}

@@ -31,8 +31,6 @@ async function sendTrackingNumberToShopify(
     trackingUrl
   );
 
-
-
   try {
     // Strategy: Try GraphQL first, fall back to hybrid approach if needed
     console.log("🔄 Attempting modern GraphQL fulfillment approach...");
@@ -47,10 +45,17 @@ async function sendTrackingNumberToShopify(
       console.log("✅ Successfully completed fulfillment using GraphQL!");
       return; // Success! No need for fallback
     } catch (graphqlError) {
-      console.log("⚠️  GraphQL approach failed:", graphqlError.message);
+      console.log(
+        "⚠️  GraphQL approach failed:",
+        (graphqlError as Error).message
+      );
 
       // Check if it's a permissions issue
-      if (graphqlError.message.includes("fulfillmentOrders access denied")) {
+      if (
+        (graphqlError as Error).message.includes(
+          "fulfillmentOrders access denied"
+        )
+      ) {
         console.log("🔄 Falling back to hybrid GraphQL+REST approach...");
         // Continue to fallback implementation below
       } else {
@@ -187,7 +192,7 @@ async function sendTrackingNumberToShopifyHybrid(
 
     // Check if there are any fulfillable items
     const fulfillableItems = orderDetails.line_items.filter(
-      (item) => item.fulfillable_quantity > 0
+      (item: any) => item.fulfillable_quantity > 0
     );
 
     console.log(`Order fulfillment analysis:`);
@@ -291,7 +296,7 @@ async function sendTrackingNumberToShopifyHybrid(
 
         // Check fulfillable quantities
         const fulfillableItems = orderDetails.line_items.filter(
-          (item) => item.fulfillable_quantity > 0
+          (item: any) => item.fulfillable_quantity > 0
         );
         console.error(
           "   Fulfillable items:",

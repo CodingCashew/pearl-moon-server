@@ -6,7 +6,26 @@ import { config } from "dotenv";
  *
  * This version uses the recommended GraphQL fulfillment workflow:
  * 1. Find order using GraphQL
- * 2. Get fulfillmentOrders for the order
+ * 2. Get fulfillmentOrders for       console.log("🎉 All fulfillment orders processed successfully!");
+  } catch (error) {
+    console.error("❌ Error updating tracking number:", error);
+
+    // Send error notification
+    await sendErrorEmail({
+      orderId: externalOrderNumber,
+      customerName: "unknown",
+      timeStamp: new Date().toISOString(),
+      errorMessage: `GraphQL fulfillment error: ${(error as Error).message}`,
+    });
+
+    throw error;
+  }r notification
+    await sendErrorEmail({
+      orderId: externalOrderNumber,
+      customerName: "unknown",
+      timeStamp: new Date().toISOString(),
+      errorMessage: `GraphQL fulfillment error: ${(error as Error).message}`,
+    });er
  * 3. Submit fulfillment request using fulfillmentOrderSubmitFulfillmentRequest
  *
  * @param externalOrderNumber - The Nalpac order number (matches Shopify order name)
@@ -117,7 +136,7 @@ async function sendTrackingNumberToShopifyGraphQL(
 
     // Check for GraphQL errors (especially permissions)
     if (searchData.errors) {
-      const accessDeniedError = searchData.errors.find((error) =>
+      const accessDeniedError = searchData.errors.find((error: any) =>
         error.message.includes("Access denied for fulfillmentOrders")
       );
 
@@ -132,7 +151,7 @@ async function sendTrackingNumberToShopifyGraphQL(
       }
 
       throw new Error(
-        `GraphQL errors: ${searchData.errors.map((e) => e.message).join(", ")}`
+        `GraphQL errors: ${searchData.errors.map((e: any) => e.message).join(", ")}`
       );
     }
 
@@ -157,7 +176,7 @@ async function sendTrackingNumberToShopifyGraphQL(
     }
 
     console.log(`📦 Found ${fulfillmentOrders.length} fulfillment order(s):`);
-    fulfillmentOrders.forEach((edge, index) => {
+    fulfillmentOrders.forEach((edge: any, index: number) => {
       console.log(`   ${index + 1}. ID: ${edge.node.id}`);
       console.log(`      Status: ${edge.node.status}`);
       console.log(`      Location: ${edge.node.assignedLocation?.name}`);
@@ -206,8 +225,8 @@ async function sendTrackingNumberToShopifyGraphQL(
 
       // Prepare line items for fulfillment using the correct FulfillmentV2Input format
       const lineItemsForFulfillment = fulfillmentOrder.lineItems.edges
-        .filter((edge) => edge.node.remainingQuantity > 0)
-        .map((edge) => ({
+        .filter((edge: any) => edge.node.remainingQuantity > 0)
+        .map((edge: any) => ({
           id: edge.node.id,
           quantity: edge.node.remainingQuantity,
         }));
@@ -290,12 +309,12 @@ async function sendTrackingNumberToShopifyGraphQL(
   } catch (error) {
     console.error("❌ Error updating tracking number:", error);
 
-    // Send error email
+    // Send error notification
     await sendErrorEmail({
       orderId: externalOrderNumber,
       customerName: "unknown",
       timeStamp: new Date().toISOString(),
-      errorMessage: `GraphQL fulfillment error: ${error.message}`,
+      errorMessage: `GraphQL fulfillment error: ${(error as Error).message}`,
     });
 
     throw error;

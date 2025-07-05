@@ -49,8 +49,8 @@ export default async function sendToNalpac(nalpacOrder: Order) {
 
 function formatNalpacOrder(nalpacOrder: Order) {
   const reference = nalpacOrder.order_number || nalpacOrder.id;
-  const customer = nalpacOrder.customer || {};
-  const address = nalpacOrder.shipping_address || {};
+  const customer = nalpacOrder.customer;
+  const address = nalpacOrder.shipping_address;
   const shippingOptionId = 125816; // USPS Priority Mail (TODO: find a cheaper option)
   // ^ I think I can omit this line from the XML and it will default to the cheapest shipping option available. // No, I guess it doesn't
 
@@ -82,7 +82,7 @@ function formatNalpacOrder(nalpacOrder: Order) {
     address.phone || customer.phone || ""
   }</ShipToPhoneNumber>
   <ShipToEmailAddress>${customer.email || ""}</ShipToEmailAddress>
-   <ShippingOptionId>${shippingOptionId}</ShippingOptionId>
+  <ShippingOptionId>${shippingOptionId}</ShippingOptionId>
   <DeliveryInstructions></DeliveryInstructions>
   <SignatureRequired>false</SignatureRequired>
   <CreateOrderRequestLines>${createOrderRequestLines}

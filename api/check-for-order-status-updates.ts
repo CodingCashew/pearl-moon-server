@@ -9,8 +9,12 @@ import { Order } from "../lib/order-type.js";
 // Load environment variables
 config();
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// Use a more compatible approach for getting directory path
+const currentFilename =
+  typeof import.meta !== "undefined" && import.meta.url
+    ? fileURLToPath(import.meta.url)
+    : process.cwd() + "/api/check-for-order-status-updates.ts";
+const __dirname = path.dirname(currentFilename);
 
 const DATA_FILE_PATH = path.join(__dirname, "../data/previous-orders.json");
 
@@ -65,9 +69,12 @@ async function getPreviousResponse() {
     // fetch the previous response from json file
     const data = await fs.readFile(DATA_FILE_PATH, "utf8");
     return JSON.parse(data);
-  } catch (error) {
+  } catch (_error: any) {
     // If file doesn't exist or can't be read, return empty structure
-    console.log("No previous orders file found, starting fresh");
+    console.log(
+      "No previous orders file found, starting fresh. (Error:)",
+      _error.message
+    );
     return { Orders: [] };
   }
 }

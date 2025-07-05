@@ -1,0 +1,66 @@
+# Cron job files (for EC2 server only)
+
+sync-deep.ts
+sync-quick.ts
+find-missing-skus.ts
+set-missing-to-zero.ts
+test-inventory-sync.ts
+verify-setup.ts
+
+# Deployment scripts (for EC2 server only)
+
+deploy-to-ec2.sh
+push-changes.sh
+
+# Server-specific documentation
+
+DEPLOYMENT-GUIDE.md
+CRON-SETUP.md
+
+# Log files and data directories
+
+logs/
+data/
+\*.log
+
+# Environment files (security)
+
+.env
+.env.local
+.env.production
+
+# Node modules and build artifacts
+
+node_modules/
+dist/
+.next/
+.nuxt/
+
+# IDE and editor files
+
+.vscode/
+.idea/
+_.swp
+_.swo
+
+# OS generated files
+
+.DS_Store
+Thumbs.db
+
+# Git files
+
+.git/
+.gitignore
+
+# TypeScript build info
+
+\*.tsbuildinfo
+
+# Coverage reports
+
+coverage/
+
+# ESLint cache
+
+.eslintcache

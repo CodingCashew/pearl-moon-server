@@ -261,30 +261,6 @@ async function getShopifyProducts(): Promise<
 async function updateShopifyInventory(
   updates: ShopifyInventoryUpdate[]
 ): Promise<void> {
-  const shopifyUrl = process.env.SHOPIFY_STORE_URL;
-  const accessToken = process.env.SHOPIFY_ACCESS_TOKEN;
-  const locationId = process.env.SHOPIFY_LOCATION_ID;
-
-  // Use the correct Shopify inventory adjustment mutation
-  const mutation = `
-    mutation inventoryAdjustQuantities($input: InventoryAdjustQuantitiesInput!) {
-      inventoryAdjustQuantities(input: $input) {
-        inventoryAdjustmentGroup {
-          id
-          reason
-          changes {
-            name
-            delta
-          }
-        }
-        userErrors {
-          field
-          message
-        }
-      }
-    }
-  `;
-
   // Process one at a time to avoid rate limiting issues
   // This is slower but much more reliable for large inventories
   const batchSize = 1;
@@ -385,7 +361,7 @@ async function updateInventoryViaREST(
       );
 
       if (inventoryResponse.ok) {
-        const inventoryData = await inventoryResponse.json();
+        await inventoryResponse.json(); // Consume response
         console.log(`✅ Updated SKU ${update.sku}: ${update.quantity} units`);
       } else {
         const errorText = await inventoryResponse.text();

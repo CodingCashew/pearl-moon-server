@@ -3,7 +3,9 @@ import { promises as fs } from "fs";
 dotenv.config();
 
 /**
- * Set all missing SKUs (not found in Nalpac) to zero quantity
+ * Set all missing SKUs (not found in Nalpac) t  } catch (_error) {
+    console.error("Error setting missing SKUs to zero:", _error);
+  }ero quantity
  * This prevents selling items that aren't available from your supplier
  */
 async function setMissingToZero(): Promise<void> {
@@ -21,10 +23,10 @@ async function setMissingToZero(): Promise<void> {
         .map((line) => line.split(",")[0]); // Get SKU from first column
 
       console.log(`📄 Found ${missingSKUs.length} missing SKUs in report file`);
-    } catch (error) {
+    } catch (error: any) {
       console.error("❌ Could not read missing-skus-report.csv");
       console.log(
-        "Please run 'npx tsx find-missing-skus.ts' first to generate the report."
+        `Please run 'npx tsx find-missing-skus.ts' first to generate the report. Error: ${error}`
       );
       return;
     }

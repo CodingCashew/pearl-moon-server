@@ -1,21 +1,7 @@
 import dotenv from "dotenv";
 
 // Load environment variables
-d; // Prepare Shopify updates
-const updates: ShopifyInventoryUpdate[] = relevantInventory.map((item) => {
-  // Sum inventory from all Nalpac locations (future-proof)
-  const totalAvailable = item.LocationInventories.reduce(
-    (sum, location) => sum + location.AvailableQuantity,
-    0
-  );
-
-  return {
-    sku: item.Sku,
-    quantity: item.Sellable ? totalAvailable : 0,
-    locationId: process.env.SHOPIFY_LOCATION_ID!,
-  };
-});
-fig();
+dotenv.config();
 
 interface NalpacInventoryItem {
   Sku: string;

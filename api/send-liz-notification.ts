@@ -1,6 +1,6 @@
 export default async function sendLizNotification({
   type,
-  action = "Cron Job?",
+  action = "Cron Job",
   timeStamp,
   subject,
   body,
